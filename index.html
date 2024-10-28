@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashcam Bingo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        /* Title Bar */
+        .title-bar {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 24px;
+            font-weight: bold;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .title-bar label, .title-bar input {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        #colorPicker {
+            cursor: pointer;
+        }
+        /* Layout */
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 80px; /* To account for the title bar */
+        }
+        
+        .bingo-section {
+            flex: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .bingo-title {
+            font-size: 2em;
+            color: red;
+            font-weight: bold;
+            display: none;
+            margin-bottom: 10px;
+        }
+        .bingo-card {
+            display: grid;
+            grid-template-columns: repeat(5, 120px);
+            grid-template-rows: repeat(5, 120px);
+            gap: 5px;
+        }
+        .bingo-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border: 2px solid #ddd;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .bingo-cell.crossed {
+            background-color: #4caf50;
+            color: white;
+            text-decoration: line-through;
+        }
+        .center-cell {
+            background-color: #ffeb3b;
+            color: black;
+            font-weight: bold;
+        }
+        .button-container {
+            margin-top: 15px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        /* Gallery on the Right */
+        .screenshot-container {
+            position: fixed;
+            right: 0;
+            top: 80px; /* Align below the title bar */
+            width: 16.67%; /* 1/6th of the screen */
+            height: calc(100vh - 80px);
+            background-color: #e0e0e0;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+            overflow-y: auto;
+            text-align: center;
+        }
+        .screenshot-container h2 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+            border: 2px solid #333;
+        }
+        #bingoCardContainer {
+            display: inline-block;
+
+            text-align: center;
+            background-color: white;
+        }
+        
+        .title-overlay {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background-color: #333; /* Default background color */
+            padding: 10px;
+            width: 100%;
+            display: none; /* Always visible */
+        }
+        .color-picker-container {
+            display: grid;
+            float: right;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .pick{
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+<body>  
+    <div class="title-bar">
+        <div class="pick"> <label for="colorPicker" style="margin-right: 10px; color: white;">Colour Picker:</label>
+            <input type="color" id="colorPicker" value="#4caf50"> <!-- Default color is green --></div>
+        <span>Dashcam Bingo</span>
+    </div>
+    
+    <div class="container">
+        <div class="bingo-section">
+            <div class="bingo-title" id="bingoTitle">BINGO!!!</div>
+            <div id="bingoCardContainer">
+                <div class="title-overlay" id="titleOverlay">Dashcam Bingo</div>
+                <div class="bingo-card" id="bingoCard"></div>
+            </div>
+            <div class="button-container">
+                <button onclick="refreshCard()">Refresh Card</button>
+            </div>
+        </div>
+        <div class="screenshot-container" id="screenshotContainer">
+            <h2>Your Winning Cards</h2>
+            <div class="gallery" id="gallery"></div>
+        </div>
+    </div>
+    
+    
+
+    <!-- Load html2canvas from CDN for screenshot functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
